@@ -169,9 +169,12 @@ class MultiSquare(gtk.DrawingArea):
             self.button1_in = True
             index = self.getIndex(event.x, event.y)
             if ((event.state & gtk.gdk.SHIFT_MASK) and (self.last_selected != -1)):
-                index += 1
                 end = min(index,self.numSquares)
-                for i in range(self.last_selected,end):
+                start = min(self.last_selected, end)
+                end = max(self.last_selected, end)
+                for i in range(1, self.numSquares):
+                    self.selected[i] = False
+                for i in range(start, end+1):
                     self.selected[i] = True
             else:
                 if not(event.state & gtk.gdk.CONTROL_MASK):
